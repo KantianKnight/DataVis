@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        #chart-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            width: fit-content;
+        }
+
+        #chart-container div {
+            width: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chart-container"></div>
+
+    <script>
+        const data = [
+            { label: 'Server A', value: 40 },
+            { label: 'Server B', value: 90 },
+            { label: 'Server C', value: 60 },
+            { label: 'Server D', value: 20 }
+        ];
+
+        const container = document.getElementById('chart-container');
+
+        data.forEach(function (item) {
+            const bar = document.createElement('div');
+            bar.style.height = item.value * 3 + 'px';
+            bar.style.backgroundColor = 'steelblue';
+            container.appendChild(bar);
+
+            bar.addEventListener('click', function () {
+                const randomColor = '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0');
+                bar.style.backgroundColor = randomColor;
+            });
+        });
+    </script>
+</body>
+</html>
