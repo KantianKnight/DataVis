@@ -1,0 +1,285 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.json",
+  "width": 300,
+  "height": 300,
+  "padding": {"left": 180, "right": 180, "top": 80, "bottom": 80},
+  "autosize": "none",
+  "background": "white",
+  "data": [
+    {
+      "name": "table",
+      "values": [
+        {
+          "category": "Other",
+          "proportion": 12.6,
+          "labelLines": ["Other"],
+          "dy": -25,
+          "tooltip": "Other: 12.6",
+          "startAngle": 0,
+          "endAngle": 0.7925399999999999,
+          "midAngle": 0.39626999999999996,
+          "drawAngle": -1.1745263000000001,
+          "x0": 208.6689764950154,
+          "y0": 9.778920282907052,
+          "x1": 225.26612116136843,
+          "y1": -54.88888516337582,
+          "cx": 218.6272632948272,
+          "cy": 9.778920282907052,
+          "arrowAngle": 5.8615043003686935
+        },
+        {
+          "category": "Manual slide refinement",
+          "proportion": 21.4,
+          "labelLines": ["Manual slide", "refinement"],
+          "dy": 0,
+          "tooltip": "Manual slide refinement: 21.4",
+          "startAngle": 0.7925399999999999,
+          "endAngle": 2.1386,
+          "midAngle": 1.4655699999999998,
+          "drawAngle": -0.10522630000000022,
+          "x0": 301.1592605520789,
+          "y0": 134.03510258884418,
+          "x1": 343.92141978720645,
+          "y1": 129.51871713700405,
+          "cx": 326.81655609315544,
+          "cy": 134.03510258884418,
+          "arrowAngle": 75.20912590874909
+        },
+        {
+          "category": "Selection-based slide refinement",
+          "proportion": 18.6,
+          "labelLines": ["Selection-based", "slide refinement"],
+          "dy": 25,
+          "tooltip": "Selection-based slide refinement: 18.6",
+          "startAngle": 2.1386,
+          "endAngle": 3.30854,
+          "midAngle": 2.7235699999999996,
+          "drawAngle": 1.1527736999999996,
+          "x0": 211.7050291978158,
+          "y0": 288.911804292136,
+          "x1": 229.16105719456635,
+          "y1": 353.20922261162184,
+          "cx": 222.17864599586613,
+          "cy": 288.911804292136,
+          "arrowAngle": 173.8022226519854
+        },
+        {
+          "category": "Selection-based slide initiation",
+          "proportion": 5.2,
+          "labelLines": ["Selection-based", "slide initiation"],
+          "dy": 25,
+          "tooltip": "Selection-based slide initiation: 5.2",
+          "startAngle": 3.30854,
+          "endAngle": 3.63562,
+          "midAngle": 3.47208,
+          "drawAngle": 1.9012837,
+          "x0": 100.67538203178734,
+          "y0": 293.7744137956746,
+          "x1": 86.72170721183244,
+          "y1": 359.44743875102995,
+          "cx": 92.3031771398144,
+          "cy": 293.7744137956746,
+          "arrowAngle": 184.857824374987
+        },
+        {
+          "category": "Outline-based slide refinement",
+          "proportion": 6.1,
+          "labelLines": ["Outline-based", "slide refinement"],
+          "dy": 15,
+          "tooltip": "Outline-based slide refinement: 6.1",
+          "startAngle": 3.63562,
+          "endAngle": 4.01931,
+          "midAngle": 3.827465,
+          "drawAngle": 2.2566687,
+          "x0": 53.731050326708385,
+          "y0": 267.6277574758664,
+          "x1": 26.49707114281668,
+          "y1": 315.90403097232866,
+          "cx": 37.390662816373364,
+          "cy": 267.6277574758664,
+          "arrowAngle": 192.71588336739225
+        },
+        {
+          "category": "Outline-based slide initiation",
+          "proportion": 36.1,
+          "labelLines": ["Outline-based", "slide initiation"],
+          "dy": -25,
+          "tooltip": "Outline-based slide initiation: 36.1",
+          "startAngle": 4.01931,
+          "endAngle": 6.29,
+          "midAngle": 5.154655,
+          "drawAngle": 3.5838587,
+          "x0": 12.624810337483268,
+          "y0": 84.94573599534344,
+          "x1": -26.237907790728713,
+          "y1": 41.54222709928928,
+          "cx": -10.692820539443918,
+          "cy": 84.94573599534344,
+          "arrowAngle": -19.705126071375304
+        }
+      ],
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "datum.category + ': ' + datum.proportion",
+          "as": "tooltip"
+        },
+        {
+          "type": "pie",
+          "field": "proportion",
+          "startAngle": 0,
+          "endAngle": 6.29,
+          "sort": false
+        },
+        {
+          "type": "formula",
+          "expr": "(datum.startAngle + datum.endAngle) / 2",
+          "as": "midAngle"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.midAngle - 1.5707963",
+          "as": "drawAngle"
+        },
+        {
+          "type": "formula",
+          "expr": "width / 2 + (width / 2 + 2) * cos(datum.drawAngle)",
+          "as": "x0"
+        },
+        {
+          "type": "formula",
+          "expr": "height / 2 + (width / 2 + 2) * sin(datum.drawAngle)",
+          "as": "y0"
+        },
+        {
+          "type": "formula",
+          "expr": "width / 2 + (width / 2 + 45) * cos(datum.drawAngle)",
+          "as": "x1"
+        },
+        {
+          "type": "formula",
+          "expr": "height / 2 + (width / 2 + 45) * sin(datum.drawAngle) + datum.dy",
+          "as": "y1"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.x0 + (datum.x1 - datum.x0) * 0.6",
+          "as": "cx"
+        },
+        {"type": "formula", "expr": "datum.y0", "as": "cy"},
+        {
+          "type": "formula",
+          "expr": "atan2(datum.y1 - datum.cy, datum.x1 - datum.cx) * 180 / PI + 90",
+          "as": "arrowAngle"
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": [
+        "Manual slide refinement",
+        "Selection-based slide refinement",
+        "Selection-based slide initiation",
+        "Outline-based slide refinement",
+        "Outline-based slide initiation",
+        "Other"
+      ],
+      "range": [
+        "#F4C07A",
+        "#C5DFA0",
+        "#2CA25F",
+        "#AED6EA",
+        "#1F77B4",
+        "#C9B8D8"
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "type": "arc",
+      "from": {"data": "table"},
+      "encode": {
+        "enter": {
+          "fill": {"scale": "color", "field": "category"},
+          "x": {"signal": "width / 2"},
+          "y": {"signal": "height / 2"},
+          "startAngle": {"field": "startAngle"},
+          "endAngle": {"field": "endAngle"},
+          "innerRadius": {"value": 0},
+          "outerRadius": {"signal": "width / 2"},
+          "cornerRadius": {"value": 0},
+          "tooltip": {"field": "tooltip"}
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {"data": "table"},
+      "encode": {
+        "enter": {
+          "x": {
+            "signal": "width / 2 + (width / 2 - 50) * cos(datum.drawAngle)"
+          },
+          "y": {
+            "signal": "height / 2 + (width / 2 - 50) * sin(datum.drawAngle)"
+          },
+          "text": {"signal": "datum.proportion + '%'"},
+          "align": {"value": "center"},
+          "baseline": {"value": "middle"},
+          "fontSize": {"value": 13},
+          "fontWeight": {"value": "normal"},
+          "fill": {"value": "#222222"}
+        }
+      }
+    },
+    {
+      "type": "path",
+      "from": {"data": "table"},
+      "encode": {
+        "enter": {
+          "path": {
+            "signal": "'M' + datum.x0 + ',' + datum.y0 + ' Q' + datum.cx + ',' + datum.cy + ' ' + datum.x1 + ',' + datum.y1"
+          },
+          "stroke": {"value": "#111"},
+          "strokeWidth": {"value": 1.5},
+          "fill": {"value": "transparent"}
+        }
+      }
+    },
+    {
+      "type": "symbol",
+      "from": {"data": "table"},
+      "encode": {
+        "enter": {
+          "x": {"field": "x1"},
+          "y": {"field": "y1"},
+          "shape": {"value": "arrow"},
+          "size": {"value": 180},
+          "fill": {"value": "#111"},
+          "angle": {"field": "arrowAngle"}
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {"data": "table"},
+      "encode": {
+        "enter": {
+          "x": {"signal": "datum.x1 + (cos(datum.drawAngle) >= 0 ? 12 : -12)"},
+          "y": {"field": "y1"},
+          "text": {"field": "labelLines"},
+          "align": {"signal": "cos(datum.drawAngle) >= 0 ? 'left' : 'right'"},
+          "baseline": {"value": "middle"},
+          "fontSize": {"value": 14},
+          "fontWeight": {"value": "bold"},
+          "lineHeight": {"value": 18},
+          "fill": {"value": "#000000"}
+        }
+      }
+    }
+  ],
+  "config": {}
+}

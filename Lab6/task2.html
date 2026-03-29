@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Interactive Vega-Lite Dashboard</title>
+  
+  <!-- Import Vega 5, Vega-Lite 5, and vega-embed 6 from a CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <style>
+    /* Basic styling to center the visualization on the page */
+    body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f9f9f9;
+    }
+    #dashboard-container {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <!-- The div where our Vega-Lite chart will be rendered -->
+  <div id="dashboard-container"></div>
+
+  <script type="text/javascript">
+    // Assign your Vega-Lite JSON specification to a variable
+    const vlSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "config": {"view": {"stroke": null}},
+      "datasets": {
+        "pie_data": [
+          {"category": "Other", "proportion": 12.6, "label": "Other"},
+          {
+            "category": "Manual slide refinement",
+            "proportion": 21.4,
+            "label": "Manual slide\nrefinement"
+          },
+          {
+            "category": "Selection-based slide refinement",
+            "proportion": 18.6,
+            "label": "Selection-based\nslide refinement"
+          },
+          {
+            "category": "Selection-based slide initiation",
+            "proportion": 5.2,
+            "label": "Selection-based\nslide initiation"
+          },
+          {
+            "category": "Outline-based slide refinement",
+            "proportion": 6.1,
+            "label": "Outline-based\nslide refinement"
+          },
+          {
+            "category": "Outline-based slide initiation",
+            "proportion": 36.1,
+            "label": "Outline-based\nslide initiation"
+          }
+        ],
+        "bar_data": [
+          {
+            "participant_id": "P1",
+            "category": "Outline-based slide initiation",
+            "proportion": 40
+          },
+          {
+            "participant_id": "P1",
+            "category": "Manual slide refinement",
+            "proportion": 20
+          },
+          {
+            "participant_id": "P1",
+            "category": "Selection-based slide refinement",
+            "proportion": 15
+          },
+          {"participant_id": "P1", "category": "Other", "proportion": 10},
+          {
+            "participant_id": "P1",
+            "category": "Outline-based slide refinement",
+            "proportion": 10
+          },
+          {
+            "participant_id": "P1",
+            "category": "Selection-based slide initiation",
+            "proportion": 5
+          },
+          {
+            "participant_id": "P2",
+            "category": "Outline-based slide initiation",
+            "proportion": 30
+          },
+          {
+            "participant_id": "P2",
+            "category": "Manual slide refinement",
+            "proportion": 25
+          },
+          {
+            "participant_id": "P2",
+            "category": "Selection-based slide refinement",
+            "proportion": 20
+          },
+          {"participant_id": "P2", "category": "Other", "proportion": 15},
+          {
+            "participant_id": "P2",
+            "category": "Outline-based slide refinement",
+            "proportion": 5
+          },
+          {
+            "participant_id": "P2",
+            "category": "Selection-based slide initiation",
+            "proportion": 5
+          },
+          {
+            "participant_id": "P3",
+            "category": "Outline-based slide initiation",
+            "proportion": 38.3
+          },
+          {
+            "participant_id": "P3",
+            "category": "Manual slide refinement",
+            "proportion": 19.2
+          },
+          {
+            "participant_id": "P3",
+            "category": "Selection-based slide refinement",
+            "proportion": 20.8
+          },
+          {"participant_id": "P3", "category": "Other", "proportion": 12.8},
+          {
+            "participant_id": "P3",
+            "category": "Outline-based slide refinement",
+            "proportion": 3.3
+          },
+          {
+            "participant_id": "P3",
+            "category": "Selection-based slide initiation",
+            "proportion": 5.6
+          }
+        ]
+      },
+      "hconcat": [
+        {
+          "width": 300,
+          "height": 300,
+          "data": {"name": "pie_data"},
+          "encoding": {
+            "theta": {"field": "proportion", "type": "quantitative", "stack": true},
+            "order": {"field": "category", "type": "nominal", "sort": "descending"},
+            "color": {
+              "field": "category",
+              "type": "nominal",
+              "scale": {
+                "domain": [
+                  "Other",
+                  "Manual slide refinement",
+                  "Selection-based slide refinement",
+                  "Selection-based slide initiation",
+                  "Outline-based slide refinement",
+                  "Outline-based slide initiation"
+                ],
+                "range": [
+                  "#C9B8D8",
+                  "#F4C07A",
+                  "#C5DFA0",
+                  "#2CA25F",
+                  "#AED6EA",
+                  "#1F77B4"
+                ]
+              },
+              "legend": null
+            }
+          },
+          "layer": [
+            {
+              "params": [
+                {
+                  "name": "category_select",
+                  "select": {"type": "point", "fields": ["category"]}
+                }
+              ],
+              "mark": {
+                "type": "arc",
+                "outerRadius": 150,
+                "thetaOffset": 2.1,
+                "cursor": "pointer"
+              },
+              "encoding": {
+                "opacity": {
+                  "condition": {"param": "category_select", "value": 1},
+                  "value": 0.3
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "radius": 100,
+                "fontSize": 13,
+                "thetaOffset": 2.1
+              },
+              "encoding": {
+                "text": {"field": "proportion", "type": "nominal", "format": ".1f"},
+                "color": {"value": "#222"}
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "radius": 190,
+                "fontWeight": "bold",
+                "lineBreak": "\n",
+                "thetaOffset": 2.1
+              },
+              "encoding": {
+                "text": {"field": "label", "type": "nominal"},
+                "color": {"value": "black"}
+              }
+            }
+          ]
+        },
+        {
+          "width": 300,
+          "height": 300,
+          "data": {"name": "bar_data"},
+          "mark": "bar",
+          "encoding": {
+            "x": {
+              "field": "participant_id",
+              "type": "nominal",
+              "title": "Participant ID",
+              "axis": {"labelAngle": 0}
+            },
+            "y": {
+              "field": "proportion",
+              "type": "quantitative",
+              "title": "Proportion (%)",
+              "stack": "zero"
+            },
+            "order": {"field": "category", "type": "nominal", "sort": "descending"},
+            "color": {
+              "field": "category",
+              "type": "nominal",
+              "title": "Category",
+              "scale": {
+                "domain": [
+                  "Other",
+                  "Manual slide refinement",
+                  "Selection-based slide refinement",
+                  "Selection-based slide initiation",
+                  "Outline-based slide refinement",
+                  "Outline-based slide initiation"
+                ],
+                "range": [
+                  "#C9B8D8",
+                  "#F4C07A",
+                  "#C5DFA0",
+                  "#2CA25F",
+                  "#AED6EA",
+                  "#1F77B4"
+                ]
+              }
+            },
+            "opacity": {
+              "condition": {"param": "category_select", "value": 1},
+              "value": 0.3
+            }
+          }
+        }
+      ]
+    };
+
+    // Embed the visualization into the div with id "dashboard-container"
+    // "actions: true" gives you the 3-dots menu to export PNG/SVG or open in Vega Editor
+    vegaEmbed('#dashboard-container', vlSpec, {actions: true})
+      .then(function(result) {
+        console.log("Dashboard rendered successfully!");
+      })
+      .catch(console.error);
+  </script>
+</body>
+</html>
